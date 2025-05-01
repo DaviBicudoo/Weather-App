@@ -1,25 +1,54 @@
-﻿namespace Weather_App
+﻿using System.Threading.Tasks;
+using Weather_App.Models;
+using Weather_App.Services;
+
+namespace Weather_App
 {
     public partial class MainPage : ContentPage
     {
-        int count = 0;
-
         public MainPage()
         {
             InitializeComponent();
         }
 
-        private void OnCounterClicked(object sender, EventArgs e)
+        private async Task searchButton_Clicked(object sender, EventArgs e)
         {
-            count++;
+            try
+            {
+                if(!string.IsNullOrEmpty(cityEntry.Text))
+                { 
+                    Weather? weather = await DataService.GetWeather(cityEntry.Text);
 
-            if (count == 1)
-                CounterBtn.Text = $"Clicked {count} time";
-            else
-                CounterBtn.Text = $"Clicked {count} times";
+                    if (weather != null)
+                    {
+                        string? weatherData = "";
 
-            SemanticScreenReader.Announce(CounterBtn.Text);
+                        weatherData = $"Latitude: {weather.Latitude}\n" +
+                                      $"Longitude: {weather.Longitude}\n" +
+                                      $"Temperature: {weather.Temperature}°C\n" +
+                                      $"Max Temperature: {weather.MaxTemperature}°C\n" +
+                                      $"Min Temperature: {weather.MinTemperature}%\n" +
+                                      $"Main: {weather.Main} hPa\n" +
+                                      $"Description: {weather.Description} m/s\n" +
+                                      $"Sunrise: {weather.Sunrise}\n" +
+                                      $"Sunset: {weather.Sunset}\n" +
+                                      $"Visibility: {weather.Visibility}\n" +
+                                      $"Wind Speed: {weather.WindSpeed} m/s\n";
+                    }
+                    else
+                    {
+                        responseLabel.Text = "No forecast data.";
+                    }
+                }
+                else
+                {
+                    responseLabel.Text = "Please enter a city name.";
+                }
+            }
+            catch(Exception ex)
+            {
+                await DisplayAlert("Error", ex.Message, "OK");
+            }
         }
     }
-
 }
