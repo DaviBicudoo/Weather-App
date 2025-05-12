@@ -51,27 +51,29 @@ namespace Weather_App
             }
         }
 
-        private void myLocationButton_Clicked(object sender, EventArgs e)
+        private async void myLocationButton_Clicked(object sender, EventArgs e)
         {
             try
             {
+                GeolocationRequest geoRequest = new GeolocationRequest(GeolocationAccuracy.Medium, TimeSpan.FromSeconds(10));
 
+                Location local = await Geolocation.Default.GetLocationAsync(geoRequest);
             }
             catch (FeatureNotSupportedException fnsEx)
             {
-                DisplayAlert("Error: Device does not support", fnsEx.Message, "OK");
+                await DisplayAlert("Error: Device does not support", fnsEx.Message, "OK");
             }
             catch(FeatureNotEnabledException fneEx)
             {
-                DisplayAlert("Error: Unabled feature", fneEx.Message, "OK");
+                await DisplayAlert("Error: Unabled feature", fneEx.Message, "OK");
             }
             catch(PermissionException pEx)
             {
-                DisplayAlert("Error: Location permission denied", pEx.Message, "OK");
+                await DisplayAlert("Error: Location permission denied", pEx.Message, "OK");
             }
             catch(Exception ex)
             {
-                DisplayAlert("Error", ex.Message, "OK");
+                await DisplayAlert("Error", ex.Message, "OK");
             }
         }
     }
