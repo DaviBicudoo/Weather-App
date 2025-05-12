@@ -11,7 +11,7 @@ namespace Weather_App
             InitializeComponent();
         }
 
-        private async Task searchButton_Clicked(object sender, EventArgs e)
+        private async void searchButton_Clicked(object sender, EventArgs e)
         {
             try
             {
@@ -57,7 +57,17 @@ namespace Weather_App
             {
                 GeolocationRequest geoRequest = new GeolocationRequest(GeolocationAccuracy.Medium, TimeSpan.FromSeconds(10));
 
-                Location local = await Geolocation.Default.GetLocationAsync(geoRequest);
+                Location? local = await Geolocation.Default.GetLocationAsync(geoRequest);
+
+                if(local != null)
+                {
+                    string deviceLocation = $"Latitude: {local.Latitude} \nLongitude {local.Longitude}";
+
+                    coordinatesLabel.Text = deviceLocation;
+                } else
+                {
+                    coordinatesLabel.Text = "No localization";
+                }
             }
             catch (FeatureNotSupportedException fnsEx)
             {
