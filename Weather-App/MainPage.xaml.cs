@@ -34,6 +34,16 @@ namespace Weather_App
                                       $"Sunset: {weather.Sunset}\n" +
                                       $"Visibility: {weather.Visibility}\n" +
                                       $"Wind Speed: {weather.WindSpeed} m/s\n";
+
+                        responseLabel.Text = weatherData;
+
+                        string map = $"https://embed.windy.com/embed.html?" +
+                            $"type=map&location=coordinates&metricRain=mm" +
+                            $"&metricTemp=°C&metricWind=km/h&zoom=10&overlay=wind&product=ecmwf&level=surface" +
+                            $"&lat={weather.Latitude.ToString()?.Replace(",", ".")}&lon={weather.Longitude.ToString()?.Replace(",", ".")}" +
+                            $"&marker=true";
+
+                        mapWebView.Source = map;
                     }
                     else
                     {

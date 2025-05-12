@@ -9,7 +9,7 @@ namespace Weather_App.Services
         {
             Weather? weather = null;
 
-            string key = "Your OpenWeather api key";
+            string key = "bdb7370abc042446dd9e8453ac94b7ad";
             string url = $"https://api.openweathermap.org/data/2.5/weather?q={city}&units=metric&appid={key}";
 
             using (HttpClient httpClient = new HttpClient())
