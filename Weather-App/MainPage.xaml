@@ -5,8 +5,12 @@
 
     <ScrollView>
         <VerticalStackLayout Padding="30, 0" Spacing="25">
-            <Entry x:Name="cityEntry" Placeholder="London"/>
-            <Button x:Name="searchButton" Text="Search" Clicked="searchButton_Clicked" />
+
+            <Button Text="My location" x:Name="myLocationButton" Clicked="myLocationButton_Clicked"/>
+            <Label x:Name="coordinatesLabel" />
+
+            <Entry x:Name="cityEntry" Placeholder="Ghana"/>
+            <Button x:Name="searchButton" Text="Get weather" Clicked="searchButton_Clicked" />
 
             <Label x:Name="responseLabel" />
         </VerticalStackLayout>

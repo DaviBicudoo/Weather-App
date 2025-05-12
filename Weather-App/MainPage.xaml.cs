@@ -50,5 +50,29 @@ namespace Weather_App
                 await DisplayAlert("Error", ex.Message, "OK");
             }
         }
+
+        private void myLocationButton_Clicked(object sender, EventArgs e)
+        {
+            try
+            {
+
+            }
+            catch (FeatureNotSupportedException fnsEx)
+            {
+                DisplayAlert("Error: Device does not support", fnsEx.Message, "OK");
+            }
+            catch(FeatureNotEnabledException fneEx)
+            {
+                DisplayAlert("Error: Unabled feature", fneEx.Message, "OK");
+            }
+            catch(PermissionException pEx)
+            {
+                DisplayAlert("Error: Location permission denied", pEx.Message, "OK");
+            }
+            catch(Exception ex)
+            {
+                DisplayAlert("Error", ex.Message, "OK");
+            }
+        }
     }
 }
