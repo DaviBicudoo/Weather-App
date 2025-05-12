@@ -16,7 +16,7 @@ namespace Weather_App
             try
             {
                 if(!string.IsNullOrEmpty(cityEntry.Text))
-                { 
+                {
                     Weather? weather = await DataService.GetWeather(cityEntry.Text);
 
                     if (weather != null)
@@ -34,6 +34,8 @@ namespace Weather_App
                                       $"Sunset: {weather.Sunset}\n" +
                                       $"Visibility: {weather.Visibility}\n" +
                                       $"Wind Speed: {weather.WindSpeed} m/s\n";
+
+                        responseLabel.Text = weatherData; // I forgot this line :P
                     }
                     else
                     {
@@ -44,42 +46,6 @@ namespace Weather_App
                 {
                     responseLabel.Text = "Please enter a city name.";
                 }
-            }
-            catch(Exception ex)
-            {
-                await DisplayAlert("Error", ex.Message, "OK");
-            }
-        }
-
-        private async void myLocationButton_Clicked(object sender, EventArgs e)
-        {
-            try
-            {
-                GeolocationRequest geoRequest = new GeolocationRequest(GeolocationAccuracy.Medium, TimeSpan.FromSeconds(10));
-
-                Location? local = await Geolocation.Default.GetLocationAsync(geoRequest);
-
-                if(local != null)
-                {
-                    string deviceLocation = $"Latitude: {local.Latitude} \nLongitude {local.Longitude}";
-
-                    coordinatesLabel.Text = deviceLocation;
-                } else
-                {
-                    coordinatesLabel.Text = "No localization";
-                }
-            }
-            catch (FeatureNotSupportedException fnsEx)
-            {
-                await DisplayAlert("Error: Device does not support", fnsEx.Message, "OK");
-            }
-            catch(FeatureNotEnabledException fneEx)
-            {
-                await DisplayAlert("Error: Unabled feature", fneEx.Message, "OK");
-            }
-            catch(PermissionException pEx)
-            {
-                await DisplayAlert("Error: Location permission denied", pEx.Message, "OK");
             }
             catch(Exception ex)
             {
